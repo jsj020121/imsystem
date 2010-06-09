@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" verticalAlign="middle" horizontalAlign="right">
+	<mx:Button styleName="firstPageBtn" bottom="10"/>
+	<mx:Button x="491" styleName="previousPageBtn"/>
+	<mx:TextInput width="47" />
+	<mx:Label text="/4页" bottom="10"/>
+	<mx:Button styleName="nextPageBtn"/>
+	<mx:Button styleName="lastPageBtn"/>
+</mx:HBox>
