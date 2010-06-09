@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Window xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300"
+    title="  添加好友" styleName="Window" systemChrome="none" showStatusBar="false" backgroundColor="#cde6ef"
+    resizable="false" showGripper="false" maximizable="false">
+	<mx:TabNavigator top="5" left="5" right="5" bottom="5">
+		<mx:Canvas label="基本查找" width="100%" height="100%">
+			<mx:RadioButton label="精确查找" y="10" left="30"/>
+			<mx:RadioButton id="rb2" label="按条件查找" y="40" left="30"/>
+			<mx:ViewStack selectedIndex="{(rb2.selected)?1:0}" right="30" left="30" top="70" bottom="10">
+				<mx:Canvas>
+					<mx:Label y="24" text="账号" left="0"/>
+					<mx:Label x="0" y="67" text="昵称"/>
+					<mx:TextInput y="22" right="36" left="33"/>
+					<mx:TextInput y="65" right="36" left="33"/>
+					
+				</mx:Canvas>
+			    
+			    <mx:Canvas>
+			        <mx:Label y="23" text="国家" left="0"/>
+			        <mx:Label y="60" text="城市" left="0"/>
+			        <mx:ComboBox x="33" y="21" width="105"/>
+			        <mx:ComboBox x="33" y="59" width="105"/>
+			        <mx:Label y="102" text="性别" left="0"/>
+			        <mx:Label x="188" y="103" text="行业"/>
+			        <mx:ComboBox x="33" y="101" width="105"/>
+			        <mx:ComboBox y="101" width="105" right="0"/>
+			        <mx:Label x="188" y="60" text="年龄"/>
+			        <mx:ComboBox y="59" width="105" right="0"/>
+			        <mx:Label x="188" y="23" text="城市"/>
+			        <mx:ComboBox y="21" width="103" right="0"/>
+			    	
+			    </mx:Canvas>
+			</mx:ViewStack>
+		</mx:Canvas>
+		
+		<mx:Canvas label="查找商圈" width="100%" height="100%">
+			<mx:RadioButton label="精确查找" y="10" left="30"/>
+			<mx:RadioButton id="rb" label="按条件查找" y="40" left="30"/>
+			<mx:ViewStack selectedIndex="{(rb.selected)?1:0}" right="30" left="30" top="70" bottom="10">
+				<mx:Canvas>
+					<mx:Label y="24" text="商圈号" left="0"/>
+					<mx:Label x="0" y="67" text="商圈名"/>
+					<mx:TextInput y="22" right="110" left="43"/>
+					<mx:TextInput y="65" right="110" left="43"/>
+					
+				</mx:Canvas>
+			    
+			    <mx:Canvas>
+			        <mx:Label y="24" text="商圈分类" left="0"/>
+			        <mx:ComboBox y="22" width="164" right="101"/>
+			        <mx:Label x="10" y="67" text="关键字"/>
+			        <mx:TextInput y="65" right="101" left="62"/>
+			    </mx:Canvas>
+			</mx:ViewStack>
+			
+		</mx:Canvas>
+	</mx:TabNavigator>
+</mx:Window>

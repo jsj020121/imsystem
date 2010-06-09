@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:view="view.*"
+	 showStatusBar="false"  width="250" height="648" title="  即时聊天" cornerRadius="4" >
+	<mx:Style source="../style/style.css"/>
+	<mx:ViewStack width="100%" height="100%">
+		<view:LoginView width="100%" height="100%"/>
+		<view:MainView/>
+	</mx:ViewStack>
 	
 </mx:WindowedApplication>
