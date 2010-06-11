@@ -14,6 +14,7 @@
     		</friends>
     		</root>
     		
+    		//私人聊天
     		private function showChartWindow(event:ListEvent):void
     		{
     			 var itemIsBranch:Boolean = myFriendsTree.dataDescriptor.isBranch(myFriendsTree.selectedItem);
@@ -25,7 +26,13 @@
     			
     		}
     		
-    		
+    		//商圈聊天
+    		private function showGroupChartWindow(event:ListEvent):void
+    		{
+                 	var win:GroupChartWindow = new GroupChartWindow();
+    			    win.open(true);
+    			
+    		}
     		
     		private function initApp():void {
                   for each(var item:XML in this.myFriendsTree.dataProvider)
@@ -43,7 +50,7 @@
 		</mx:Tree>
 		</mx:Canvas>
 	<mx:Canvas label="会员商圈" width="100%" height="100%">
-	    <mx:List width="100%" height="100%" borderStyle="none">
+	    <mx:List width="100%" height="100%" borderStyle="none" doubleClickEnabled="true" itemDoubleClick="showGroupChartWindow(event)">
 	    	<mx:dataProvider>
 	    		<mx:Array>
 	    			<mx:Object name="商圈一号" logo="images/sms.png"/>

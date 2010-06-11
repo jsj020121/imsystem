@@ -24,7 +24,7 @@
                     <menuitem label="文件" data="top">  
                         <menuitem label="个人资料"/>  
                         <menuitem label="我的状态">
-                        <menuitem label = "在线"  type="radio"  /> 
+                        <menuitem label = "在线"  type="radio" /> 
                         <menuitem label = "离开" type="radio"  /> 
                         <menuitem label = "忙碌" type="radio"  /> 
                         <menuitem label = "隐身" type="radio"  /> 
@@ -59,7 +59,8 @@
     		
     	]]>
     </mx:Script>
-    <mx:MenuBar top="0" left="2" dataProvider="{menuBarCollection}" labelField="@label" itemClick="menuHandler(event);"    >
+    <mx:MenuBar top="0" left="0" dataProvider="{menuBarCollection}" labelField="@label" itemClick="menuHandler(event);" 
+    	        backgroundSkin="view.component.MenuBarNoborderSkin"  >
     	
     </mx:MenuBar>
     <mx:Canvas width="48" height="48" styleName="imageBox" left="10" top="31">
