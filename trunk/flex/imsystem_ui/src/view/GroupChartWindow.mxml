@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Window xmlns:mx="http://www.adobe.com/2006/mxml" styleName="Window"  systemChrome="none"
-	       showStatusBar="false" backgroundColor="#cde6ef" title="{titleText}"
-	       layout="absolute" width="540" height="470" xmlns:ns1="view.component.*">
+	       showStatusBar="false" backgroundColor="#cde6ef"  title="{titleText}"
+	       layout="absolute" width="590" height="470" xmlns:ns1="view.component.*">
 	<mx:Script>
 		<![CDATA[
 			
 			[Bindable]
-			public var titleText = "  喜洋洋"
+			public var titleText:String = "  汽车商圈";
 			
 			private function showHistoryMessage():void
 			{
@@ -18,7 +18,7 @@
 				else
 				{
 				   currentState = "";
-				   width = 540;   
+				   width = 590;   
 				}
 			}
 			
@@ -45,19 +45,18 @@
 				<ns1:PageNavigator bottom="10" right="10" width="287" height="28">
 				</ns1:PageNavigator>
 			</mx:AddChild>
-			<mx:RemoveChild target="{myImage}"/>
-			<mx:RemoveChild target="{userImage}"/>
 			<mx:RemoveChild target="{canvas1}"/>
-			<mx:RemoveChild target="{canvas2}"/>
+			<mx:RemoveChild target="{memberList}"/>
 		</mx:State>
 	</mx:states>
-	<mx:Canvas width="125" height="125" y="42" right="10"  styleName="imageBox" id="canvas1">
-	<mx:Image id="userImage" source="images/user1.png" left="2" right="2" top="2" bottom="2"/>
+	<mx:Canvas width="158" height="125" y="42" right="10"  styleName="imageBox" id="canvas1" cornerRadius="4" borderThickness="0">
+		<mx:Label x="10" y="10" text="商圈公告:"/>
+		<mx:Label x="10" y="38" text="祝大家合作愉快！！"/>
 	</mx:Canvas>
-	<mx:TextArea y="40" height="254" left="10" right="153" id="chartText"/>
-	<mx:TextArea left="10" right="153" bottom="40" top="326" id="inputTextArea"/>
-	<mx:Button label="发送" bottom="10" right="153" id="button3" width="80"/>
-	<mx:Button label="关闭" bottom="10" click="closeMe()" right="242" id="button2" width="80"/>
+	<mx:TextArea y="40" height="254" left="10" right="176" id="chartText"/>
+	<mx:TextArea left="10" right="176" bottom="40" top="326" id="inputTextArea"/>
+	<mx:Button label="发送" bottom="10" right="176" id="button3" width="80"/>
+	<mx:Button label="关闭" bottom="10" click="closeMe()" right="267" id="button2" width="80"/>
 	<mx:Button label="聊天记录" bottom="10" left="10" toggle="true" click="showHistoryMessage()"/>
 	<mx:HBox x="10" y="298" horizontalGap="2">
 	<mx:LinkButton x="10" y="298" icon="@Embed('images/font.png')" label="字体"/>
@@ -66,7 +65,6 @@
 	<mx:LinkButton x="205" y="298" icon="@Embed('images/screenShort.png')" label="截屏"  id="linkbutton1"/>
 	<mx:LinkButton x="278" y="298" label="快捷回复"/>
 	</mx:HBox>
-	<mx:Canvas width="125" height="125" right="10" bottom="30" styleName="imageBox" id="canvas2">
-		<mx:Image id="myImage" source="images/user2.jpg" left="2" right="2" top="2" bottom="2"/>
-	</mx:Canvas>
+	<mx:List id="memberList" x="420" y="199" width="158" height="229" borderStyle="none"></mx:List>
+	<mx:Label x="422" y="176" text="商圈成员"/>
 </mx:Window>

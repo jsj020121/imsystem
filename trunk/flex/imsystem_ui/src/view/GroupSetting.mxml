@@ -1,153 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Window xmlns:mx="http://www.adobe.com/2006/mxml" width="434" height="312" styleName="Window"  systemChrome="none"
 	       showStatusBar="false" backgroundColor="#cde6ef" maximizable="false" 
-	       layout="absolute" title="  个人资料" resizable="false" showGripper="false">
+	       layout="absolute" title="  商圈设置" resizable="false" showGripper="false">
 	<mx:Canvas width="48" height="48" styleName="imageBox" left="10" top="10">
 	<mx:Image source="images/user1.png" horizontalCenter="0" verticalCenter="0" 
 		      left="2" right="2" top="2" bottom="2"/>
     </mx:Canvas>
-	<mx:LinkButton x="3" y="65" label="修改头像"/>
+	<mx:LinkButton x="3" y="65" label="修改图标"/>
 	<mx:List id="tabBar" selectedIndex="0" x="4" y="95" width="80"
 		     backgroundAlpha="0" borderStyle="none" textAlign="center">
 		<mx:dataProvider>
 			<mx:Array>
-				<mx:String>基本资料</mx:String>
-				<mx:String>联系方式</mx:String>
+				<mx:String>商圈资料</mx:String>
+				<mx:String>商圈设置</mx:String>
 			</mx:Array>
 		</mx:dataProvider>
 	</mx:List>
 	<mx:ViewStack right="10" left="84" bottom="35" top="10"  selectedIndex="{tabBar.selectedIndex}">
 		<mx:Canvas label="基本资料" styleName="imageBox" cornerRadius="4"  width="100%" height="100%">
-			<mx:Label text="昵称" x="10" top="12"/>
-			<mx:Label text="生日"  y="44" x="10"/>
-			<mx:Label text="生肖"  y="79" x="10"/>
-			<mx:Label text="国家"  y="118" x="184"/>
-			<mx:Label text="城市"  y="154" x="184"/>
-			<mx:Label text="性别"  x="184" top="12"/>
-			<mx:TextInput id="userNickName" width="107" top="10" left="43"/>
-			<mx:Label text="年龄"  y="46" x="184"/>
-			<mx:TextInput id="userNickName0" top="44" right="10" width="95"/>
-			<mx:ComboBox right="10" top="10" width="95">
-			<mx:dataProvider>
-				<mx:Array>
-					<mx:String>保密</mx:String>
-					<mx:String>男</mx:String>
-					<mx:String>女</mx:String>
-				</mx:Array>
-			</mx:dataProvider>
-			</mx:ComboBox>
-			<mx:Label text="血型"  x="184" y="79"/>
-			<mx:ComboBox right="10" top="77" width="95">
-			<mx:dataProvider>
-				<mx:Array>
-				    <mx:String>  </mx:String>
-					<mx:String>A</mx:String>
-					<mx:String>B</mx:String>
-					<mx:String>O</mx:String>
-					<mx:String>AB</mx:String>
-					<mx:String>其它</mx:String>
-				</mx:Array>
-			</mx:dataProvider>
-			</mx:ComboBox>
-			<mx:ComboBox right="10" top="116" width="95">
-			<mx:dataProvider>
-				<mx:Array>
-				    <mx:String>  </mx:String>
-					<mx:String>A</mx:String>
-					<mx:String>B</mx:String>
-					<mx:String>O</mx:String>
-					<mx:String>AB</mx:String>
-					<mx:String>其它</mx:String>
-				</mx:Array>
-			</mx:dataProvider>
-			</mx:ComboBox>
-			<mx:DateField y="42" width="107" left="43"/>
-			<mx:ComboBox right="174" top="77"  left="43">
-			<mx:dataProvider>
-				<mx:Array>
-				    <mx:String>  </mx:String>
-					<mx:String>鼠</mx:String>
-					<mx:String>牛</mx:String>
-					<mx:String>虎</mx:String>
-					<mx:String>兔</mx:String>
-					<mx:String>龙</mx:String>
-					<mx:String>蛇</mx:String>
-					<mx:String>马</mx:String>
-					<mx:String>羊</mx:String>
-					<mx:String>猴</mx:String>
-					<mx:String>鸡</mx:String>
-					<mx:String>狗</mx:String>
-					<mx:String>猪</mx:String>
-				</mx:Array>
-			</mx:dataProvider>
-			</mx:ComboBox>
-			<mx:Label text="星座"  y="118" x="10"/>
-			<mx:ComboBox right="174" top="116" left="43">
-			<mx:dataProvider>
-				<mx:Array>
-				    <mx:String>  </mx:String>
-					<mx:String>双子</mx:String>
-					<mx:String>巨蟹</mx:String>
-					<mx:String>金牛</mx:String>
-				</mx:Array>
-			</mx:dataProvider>
-			</mx:ComboBox>
-			<mx:Label y="154" x="10" text="省份" />
-			
-			<mx:ComboBox right="174" top="152" left="43">
-			<mx:dataProvider>
-				<mx:Array>
-				    <mx:String>  </mx:String>
-					<mx:String>A</mx:String>
-					<mx:String>B</mx:String>
-					<mx:String>O</mx:String>
-					<mx:String>AB</mx:String>
-					<mx:String>其它</mx:String>
-				</mx:Array>
-			</mx:dataProvider>
-			</mx:ComboBox>
-			<mx:ComboBox right="10" top="152" width="95">
-			<mx:dataProvider>
-				<mx:Array>
-				    <mx:String>  </mx:String>
-					<mx:String>A</mx:String>
-					<mx:String>B</mx:String>
-					<mx:String>O</mx:String>
-					<mx:String>AB</mx:String>
-					<mx:String>其它</mx:String>
-				</mx:Array>
-			</mx:dataProvider>
+			<mx:Label text="号码" top="12" x="10"/>
+			<mx:Label text="名称"  y="44" x="10"/>
+			<mx:Label text="分类"  y="79" x="10"/>
+			<mx:Label text="创建人"  x="184" top="12"/>
+			<mx:TextInput id="groupID" width="107" top="10" left="43"/>
+			<mx:TextInput id="groupName" width="107" top="42" left="43"/>
+			<mx:Label text="备注"  y="46" x="184"/>
+			<mx:TextInput id="beizhu" top="44" right="10" width="95"/>
+			<mx:TextInput id="creatUser" top="10" right="10" width="95"/>
+			<mx:ComboBox right="188" top="77"  left="43">
 			</mx:ComboBox>
 			
-			<mx:Label text="备注" left="10" top="193"/>
-			<mx:TextArea right="10" left="43" bottom="39" top="192">
+			<mx:Label text="简介" left="10" top="182"/>
+			<mx:TextArea right="10" left="43" bottom="31" top="181">
+				
+			</mx:TextArea>
+			<mx:Label text="公告" left="10" top="117"/>
+			<mx:TextArea right="10" left="43" bottom="94" top="116">
 				
 			</mx:TextArea>
 				
 		</mx:Canvas>
 	    
-	    <mx:Canvas label="联系方式" width="100%" height="100%" 
+	    <mx:Canvas width="100%" height="100%" 
 	    	       styleName="imageBox" cornerRadius="4"> 
+	        <mx:Label y="26" text="收到该商圈来的信息时:" left="10"/>
+	        <mx:RadioButton x="61.5" y="61" label="接收并提示消息"/>
+	        <mx:RadioButton x="61.5" y="91" label="消息来时只显示消息数目"/>
+	        <mx:RadioButton x="61.5" y="121" label="接收但不提示数目（只保存在聊天记录中）"/>
+	        <mx:RadioButton x="61.5" y="151" label="阻止一切该商圈的消息"/>
 	    
-	    <mx:Label text="电话" x="10" top="10"/>
-	    <mx:TextInput id="phone" width="117" left="43" top="10"/>
-	    
-	    <mx:Label text="手机" x="170" top="10"/>
-	    <mx:TextInput id="mobile" width="111" right="10" top="10"/>
-	    
-	    <mx:Label text="邮件" x="10" y="46"/>
-	    <mx:TextInput  id="email" width="117" y="44" left="43"/>
-	    
-	    <mx:Label text="地址" x="10" y="81"/>
-	    <mx:TextInput  id="address" y="79" left="43" right="10"/>
-	    
-	    
-	    <mx:Label text="邮编" x="170" y="46"/>
-	    <mx:TextInput  id="zipcode" y="44" left="202" right="10"/>
-	    
-	    <mx:Label text="主页" x="10" y="117"/>
-	    <mx:TextInput  id="web" y="115" left="43" right="10"/>
-			
 		</mx:Canvas>	
 	</mx:ViewStack>
 	<mx:Button x="254" label="确定" width="80" bottom="7" click="this.close()"/>

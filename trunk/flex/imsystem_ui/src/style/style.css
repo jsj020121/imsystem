@@ -55,9 +55,9 @@ TextInput
 }
 Button {
    cornerRadius: 4;
-   highlightAlphas: 0.32, 0.29;
-   fillAlphas: 0.12, 1, 0.36, 0.65;
-   fillColors: #ffffff, #90ccdb, #ffffff, #3f97d0;
+   highlightAlphas: 0.10, 0.29;
+   fillAlphas: 0.08, 1, 0.36, 0.65;
+   fillColors: #90ccdb, #90ccdb, #ffffff, #3f97d0;
 }
 
 TabNavigator
@@ -76,10 +76,16 @@ Accordion
 {
 	font-size:12;
 	headerStyleName: accordionHeader;
+	   highlightAlphas: 0.10, 0.29;
+   fillAlphas: 0.08, 1, 0.36, 0.65;
+   fillColors: #90ccdb, #90ccdb, #ffffff, #3f97d0;
 }
 .accordionHeader
 {
 	fontSize: 12;
+	   highlightAlphas: 0.10, 0.29;
+   fillAlphas: 0.08, 1, 0.36, 0.65;
+   fillColors: #90ccdb, #90ccdb, #ffffff, #3f97d0;
 }
 .imageBox
 {
