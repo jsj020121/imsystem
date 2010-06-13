@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Window xmlns:mx="http://www.adobe.com/2006/mxml" styleName="Window"  systemChrome="none"
+	       showStatusBar="false" backgroundColor="#cde6ef"  title="{titleText}"
+	       layout="absolute" width="590" height="470" xmlns:ns1="view.component.*" xmlns:components="com.imsystem.contacts.components.*">
+	<mx:Script>
+		<![CDATA[
+			
+			[Bindable]
+			public var titleText:String = "  汽车商圈";
+			
+			private function showHistoryMessage():void
+			{
+				if(!currentState || currentState == "")
+				{
+					
+				   currentState = "showChartMessage";
+				}
+				else
+				{
+				   currentState = "";
+				   width = 590;   
+				}
+			}
+			
+			private function closeMe():void
+			{
+				this.close();
+			}
+			
+		]]>
+	</mx:Script>  
+	<mx:Style source="../style/style.css"/>     
+	<mx:states>
+		<mx:State name="showChartMessage">
+			<mx:SetProperty name="width" value="698"/>
+			<mx:AddChild position="lastChild">
+				<mx:Canvas right="10" bottom="40" width="287" top="40" backgroundColor="#ffffff">
+				</mx:Canvas>
+			</mx:AddChild>
+			<mx:SetStyle target="{chartText}" name="right" value="305"/>
+			<mx:SetStyle target="{button2}" name="right" value="393"/>
+			<mx:SetStyle target="{button3}" name="right" value="305"/>
+			<mx:SetStyle target="{inputTextArea}" name="right" value="305"/>
+			<mx:AddChild position="lastChild">
+				<components:PageNavigator bottom="10" right="10" width="287" height="28"/>
+			</mx:AddChild>
+			<mx:RemoveChild target="{canvas1}"/>
+			<mx:RemoveChild target="{memberList}"/>
+		</mx:State>
+	</mx:states>
+	<mx:Canvas width="158" height="125" y="42" right="10"  styleName="imageBox" id="canvas1" cornerRadius="4" borderThickness="0">
+		<mx:Label x="10" y="10" text="商圈公告:"/>
+		<mx:Label x="10" y="38" text="祝大家合作愉快！！"/>
+	</mx:Canvas>
+	<mx:TextArea y="40" height="254" left="10" right="176" id="chartText"/>
+	<mx:TextArea left="10" right="176" bottom="40" top="326" id="inputTextArea"/>
+	<mx:Button label="发送" bottom="10" right="176" id="button3" width="80"/>
+	<mx:Button label="关闭" bottom="10" click="closeMe()" right="267" id="button2" width="80"/>
+	<mx:Button label="聊天记录" bottom="10" left="10" toggle="true" click="showHistoryMessage()"/>
+	<mx:HBox x="10" y="298" horizontalGap="2">
+	<mx:LinkButton x="10" y="298" icon="@Embed('images/font.png')" label="字体"/>
+	<mx:LinkButton x="67" y="298" icon="@Embed('images/emotion.png')" label="表情" id="linkbutton3"/>
+	<mx:LinkButton x="123" y="298" icon="@Embed('images/sendPic.png')" label="产品图片" id="linkbutton2"/>
+	<mx:LinkButton x="205" y="298" icon="@Embed('images/screenShort.png')" label="截屏"  id="linkbutton1"/>
+	<mx:LinkButton x="278" y="298" label="快捷回复"/>
+	</mx:HBox>
+	<mx:List id="memberList" x="420" y="199" width="158" height="229" borderStyle="none"></mx:List>
+	<mx:Label x="422" y="176" text="商圈成员"/>
+</mx:Window>

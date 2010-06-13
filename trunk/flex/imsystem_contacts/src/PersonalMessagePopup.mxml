@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" title="Personal Message"
+	width="300" height="314" borderAlpha="1"
+	initialize="onInit( event )" showCloseButton="true" close="onCloseClick( event )">
+	<mx:Script>
+		<![CDATA[
+			import flash.events.Event;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			
+			import org.jivesoftware.xiff.core.JID;
+			import org.jivesoftware.xiff.data.Message;
+			import org.jivesoftware.xiff.data.Presence;
+			import org.jivesoftware.xiff.events.MessageEvent;
+			
+			public static var CLOSE:String = "close";
+			
+			private var _tojid:JID;
+			private var _fromjid:JID;
+			
+			public function get toJID():JID
+			{
+				return _tojid;
+			}
+			public function set toJID( value:JID ):void
+			{
+				_tojid = value;
+				callLater( setToJID, [ value ] );
+			}
+			
+			public function set fromJID( value:JID ):void
+			{
+				_fromjid = value;
+			}
+			
+			public function set userPresence( value:String ):void
+			{
+				callLater( setPresence, [ value ] );
+			}
+			
+			public function set userStatus( value:String ):void
+			{
+				callLater( setStatus, [ value ] );
+			}
+			
+			public function updateMessage( message:String ):void
+			{
+				callLater( updateMessageDisplay, [ message, _tojid ] );
+			}
+			
+			private function setToJID( jid:JID ):void
+			{
+				userJIDLabel.text = jid.toString();
+			}
+			
+			private function setPresence( presence:String ):void
+			{
+				userPresenceLabel.text = presence;
+			}
+			
+			private function setStatus( status:String ):void
+			{
+				userStatusLabel.text = status;
+			}
+			
+			private function updateMessageDisplay( message:String, jid:JID ):void
+			{
+				messageTextArea.htmlText += jid.bareJid + ": " +  message;
+				callLater( updateScrollPosition );
+			}
+			
+			private function updateScrollPosition():void
+			{
+				messageTextArea.verticalScrollPosition = messageTextArea.maxVerticalScrollPosition;
+			}
+			
+			private function sendMessage():void
+			{
+				if( inputTextArea.text.length > 0 )
+				{
+					var message:Message = new Message( _tojid, null, null, null, Message.CHAT_TYPE, null );
+					message.from = _fromjid;
+					message.body = inputTextArea.text;
+					
+					updateMessageDisplay( inputTextArea.text, _fromjid );
+					callLater( clearTypeArea );
+					callLater( updateScrollPosition );
+					var messageEvent:MessageEvent = new MessageEvent();
+					messageEvent.data = message;
+					dispatchEvent( messageEvent );
+				}
+			}
+			
+			private function clearTypeArea():void
+			{
+				inputTextArea.text = "";
+			}
+			
+			
+			private function onInit( event:FlexEvent ):void
+			{
+				inputTextArea.addEventListener( FocusEvent.FOCUS_IN, onMessageFocusIn, false, 0, true );
+				inputTextArea.addEventListener( FocusEvent.FOCUS_OUT, onMessageFocusOut, false, 0, true );
+			}
+			
+			private function onMessageFocusIn( event:FocusEvent ):void
+			{
+				inputTextArea.addEventListener( KeyboardEvent.KEY_DOWN, onMessageKeyDown );
+			}
+			
+			private function onMessageFocusOut( event:FocusEvent ):void
+			{
+				inputTextArea.removeEventListener( KeyboardEvent.KEY_DOWN, onMessageKeyDown );
+			}
+			
+			private function onMessageKeyDown( event:KeyboardEvent ):void
+			{
+				if( event.keyCode == Keyboard.ENTER )
+				{
+					sendMessage();
+				}
+			}
+			
+			private function onCloseClick( event:CloseEvent ):void
+			{
+				inputTextArea.removeEventListener( FocusEvent.FOCUS_IN, onMessageFocusIn );
+				inputTextArea.removeEventListener( FocusEvent.FOCUS_OUT, onMessageFocusOut );
+				inputTextArea.removeEventListener( KeyboardEvent.KEY_DOWN, onMessageKeyDown );
+			}
+			
+			private function onSendClick( event:MouseEvent ):void
+			{
+				sendMessage();
+			}
+			
+		]]>
+	</mx:Script>
+	<mx:VBox width="100%" height="100%" paddingTop="5" paddingRight="5" paddingBottom="5" paddingLeft="5">
+		<mx:HBox width="100%">
+			<mx:Image width="50" height="50" includeInLayout="false" />
+			<mx:Label id="userJIDLabel" text="userJID" width="100%" fontWeight="bold" />
+		</mx:HBox>
+		<mx:Label id="userPresenceLabel" text="userPresence" width="100%" fontWeight="bold" />
+		<mx:Label id="userStatusLabel" text="userStatus" width="100%" fontWeight="bold" />
+		<mx:TextArea id="messageTextArea" width="100%" height="100%" backgroundColor="#EFEFEF" borderStyle="inset" editable="false" />
+		<mx:HBox width="100%">
+			<mx:TextArea id="inputTextArea" width="100%" height="21" wordWrap="false" backgroundColor="#EFEFEF" borderStyle="inset" editable="true" />
+			<mx:Button id="sendButton" label="Send" click="onSendClick( event )" />
+		</mx:HBox>
+	</mx:VBox>
+</mx:TitleWindow>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" xmlns:component="view.component.*"
+	       creationComplete="initApp()">
+    <mx:Script>
+    	<![CDATA[
+    		import mx.events.ListEvent;
+    		import mx.events.ItemClickEvent;
+    		private var myFrinends:XML =
+    		<root>
+    		<friends name="我的好友">
+    		   <user id="01" name="小王" img="images/user1.png" status="onLine"/>
+    		   <user id="01" name="小张" img="images/user2.png" status="offLine"/>
+    		   <user id="01" name="小李" img="images/user2.png" status="offLine"/>
+    		</friends>
+    		</root>
+    		
+    		//私人聊天
+    		private function showChartWindow(event:ListEvent):void
+    		{
+    			 var itemIsBranch:Boolean = myFriendsTree.dataDescriptor.isBranch(myFriendsTree.selectedItem);
+                 if (!itemIsBranch)
+                 {
+                 	var win:ChartWindow = new ChartWindow();
+    			    win.open(true);
+                 }
+    			
+    		}
+    		
+    		//商圈聊天
+    		private function showGroupChartWindow(event:ListEvent):void
+    		{
+                 	var win:GroupChartWindow = new GroupChartWindow();
+    			    win.open(true);
+    			
+    		}
+    		
+    		private function initApp():void {
+                  for each(var item:XML in this.myFriendsTree.dataProvider)
+                  this.myFriendsTree.expandChildrenOf(item,true);
+           
+           
+            }
+
+    	]]>
+    </mx:Script>
+	<mx:Accordion width="100%" height="100%">
+		<mx:Canvas label="我的好友" width="100%" height="100%">
+		<mx:Tree id="myFriendsTree" width="100%" height="100%" 
+			     itemDoubleClick="showChartWindow(event)"  doubleClickEnabled="true" dataProvider="{myFrinends}" labelField="@name" showRoot="false">
+		</mx:Tree>
+		</mx:Canvas>
+	<mx:Canvas label="会员商圈" width="100%" height="100%">
+	    <mx:List width="100%" height="100%" borderStyle="none" doubleClickEnabled="true" itemDoubleClick="showGroupChartWindow(event)">
+	    	<mx:dataProvider>
+	    		<mx:Array>
+	    			<mx:Object name="商圈一号" logo="images/sms.png"/>
+	    			<mx:Object name="商圈二号" logo="images/emotion.png"/>
+	    			<mx:Object name="商圈三号" logo="images/app3.png"/>
+	    		</mx:Array>
+	    	</mx:dataProvider>
+	    	<mx:itemRenderer>
+	    		<mx:Component>
+	    			<mx:HBox paddingLeft="10" verticalAlign="middle" height="50">
+	    				<mx:Image source="{data.logo}" height="40" width="40"/>
+	    				<mx:Text text="{data.name}"/>
+	    			</mx:HBox>
+	    		</mx:Component>
+	    	</mx:itemRenderer>
+	    </mx:List>
+		</mx:Canvas>
+		<mx:Canvas label="企业商圈" width="100%" height="100%">
+		</mx:Canvas>	
+	</mx:Accordion>
+	
+</mx:Canvas>
