@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%"
+	       creationComplete="initCollections()" xmlns:view="com.imsystem.contacts.view.*">
+    <mx:Script>
+    	<![CDATA[
+    		import mx.controls.Alert;
+    		import mx.events.MenuEvent;
+    		import mx.collections.XMLListCollection;
+    		
+    		[Bindable]  
+            public var menuBarCollection:XMLListCollection;  
+            
+            private var openProfile:Boolean = false;
+
+    		
+    		private function showBox():void
+    		{
+    			var win:AddFriend =  new AddFriend();
+    			win.open(true);
+    		}
+    		
+    		private var menubarXML:XMLList =  
+                <>  
+                    <menuitem label="文件" data="top">  
+                        <menuitem label="个人资料"/>  
+                        <menuitem label="我的状态">
+                        <menuitem label = "在线"  type="radio" /> 
+                        <menuitem label = "离开" type="radio"  /> 
+                        <menuitem label = "忙碌" type="radio"  /> 
+                        <menuitem label = "隐身" type="radio"  /> 
+                        </menuitem>
+                        <menuitem label="系统设置"/> 
+                        <menuitem label="注销"/> 
+                        <menuitem label="退出"/>  
+                    </menuitem>  
+                    <menuitem label="工具" data="top">  
+                    </menuitem>
+                     <menuitem label="帮助" data="top">  
+                        <menuitem label="帮助中心" />  
+                    </menuitem>    
+                </>;  
+           
+           private function initCollections():void {  
+                menuBarCollection = new XMLListCollection(menubarXML);  
+            }  
+ 
+            private function menuHandler(event:MenuEvent):void  {  
+                if (event.item.@data != "top") {  
+                }          
+            }  
+
+           //打开个人资料窗口
+           private function showMyProfile():void
+           {
+           	  var profileWin:UserProfile =  new UserProfile();
+           	  profileWin.open(true);
+           }
+    		
+    		
+    	]]>
+    </mx:Script>
+    <mx:MenuBar top="0" left="0" dataProvider="{menuBarCollection}" labelField="@label" itemClick="menuHandler(event);" 
+    	        backgroundSkin="com.imsystem.contacts.components.MenuBarNoborderSkin"  >
+    </mx:MenuBar>
+    <mx:Canvas width="48" height="48" styleName="imageBox" left="10" top="31">
+	<mx:Image source="images/user1.png" horizontalCenter="0" verticalCenter="0" 
+		      left="2" right="2" top="2" bottom="2" click="showMyProfile()" buttonMode="true" useHandCursor="true"/>
+    </mx:Canvas>
+	<mx:Label x="68" y="31" text="王小米"/>
+	<mx:Label x="68" y="53" text="系统消息:"/>
+	<mx:Label x="126" y="53" text="2条"/>
+	
+	<mx:VBox id="leftBar" left="2" bottom="45" verticalAlign="top"
+		     horizontalAlign="center" top="87" width="36">
+		<mx:LinkButton  icon="@Embed('images/sms.png')" paddingLeft="5" paddingRight="5"/>
+		<mx:LinkButton  icon="@Embed('images/app2.png')" paddingLeft="5" paddingRight="5"/>
+		<mx:LinkButton  icon="@Embed('images/app3.png')" paddingLeft="5" paddingRight="5"/>
+		<mx:LinkButton  icon="@Embed('images/app4.png')" paddingLeft="5" paddingRight="5"/>
+			
+	</mx:VBox>
+	<mx:ViewStack id="viewstack1" selectedIndex="{tabbar.selectedIndex}" bottom="45" right="5" left="40" top="108" backgroundColor="red">
+		<view:MyContacts width="100%" height="100%"/>
+		<mx:Canvas width="100%" height="100%"  backgroundColor="#ffffff" styleName="imageBox"/>
+	</mx:ViewStack>
+	<mx:Label text="2010年6月1日22:38分" bottom="10" right="10"/>
+	<mx:Button label="添加好友" bottom="10" left="5" click="showBox()"/>
+	<mx:TabBar id="tabbar" top="87" left="40">
+	<mx:dataProvider>
+		<mx:Array>
+			<mx:String>联系人</mx:String>
+			<mx:String>所属汽车城</mx:String>
+		</mx:Array>
+	</mx:dataProvider>
+	</mx:TabBar>
+</mx:Canvas>

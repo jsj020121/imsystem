@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" title="Multi User Chat"
+	borderAlpha="1" horizontalScrollPolicy="off" verticalScrollPolicy="off"
+	initialize="onInit( event )" showCloseButton="true" close="onCloseClick( event )">
+	<mx:Script>
+		<![CDATA[
+			import mx.core.Application;
+			import com.yourpalmark.chat.ChatManager;
+			
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			
+			import org.jivesoftware.xiff.conference.InviteListener;
+			import org.jivesoftware.xiff.conference.Room;
+			import org.jivesoftware.xiff.core.JID;
+			import org.jivesoftware.xiff.core.XMPPConnection;
+			import org.jivesoftware.xiff.data.Message;
+			import org.jivesoftware.xiff.data.muc.MUCItem;
+			import org.jivesoftware.xiff.events.RoomEvent;
+			import org.jivesoftware.xiff.events.RosterEvent;
+			import org.jivesoftware.xiff.events.XIFFErrorEvent;
+			import org.jivesoftware.xiff.im.Roster;
+			
+			private static const DEFAULT_ROOM_LOCATION:String = "conference@conference";
+			
+			private var _chatManager:ChatManager;
+			private var _room:Room;
+			private var _moderator:Boolean = true;
+			
+			public function set chatManager( value:ChatManager ):void
+			{
+				_chatManager = value;
+				callLater( setConnection, [ value.connection ] );
+			}
+			
+			public function set room( value:Room ):void
+			{
+				_room = value;
+				callLater( setupNonModeratorRoom );
+			}
+			
+			public function set moderator( value:Boolean ):void
+			{
+				_moderator = value;
+			}
+			
+			public override function validateSize( recursive:Boolean=false ):void
+			{
+				super.validateSize( recursive );
+				
+				this.width = Application.application.width * .8;
+				this.height = Application.application.height * .8;
+				PopUpManager.centerPopUp( this );
+			}
+			
+			private function setupModeratorRoom():void
+			{
+				_room.enableAutoUpdate();
+				addRoomListeners();
+				setupDataProviders();
+				chatRosterGrid.dataProvider = _room;
+			}
+			
+			private function setupNonModeratorRoom():void
+			{
+				_room.enableAutoUpdate();
+				addRoomListeners();
+				setupDataProviders();
+				chatRosterGrid.dataProvider = _room;
+				_room.join();
+				
+				banBuddyButton.enabled = false;
+				kickBuddyButton.enabled = false;
+				joinButton.enabled = false;
+				allowBuddyButton.enabled = false;
+				inviteBuddyComboBox.enabled = true;
+			}
+			
+			private function addRoomListeners():void
+			{
+				_room.addEventListener( RoomEvent.GROUP_MESSAGE, onGroupMessage, false, 0, true );
+				_room.addEventListener( RoomEvent.ADMIN_ERROR, onAdminError, false, 0, true );
+				_room.addEventListener( RoomEvent.AFFILIATIONS, onAffiliations, false, 0, true );
+				_room.addEventListener( RoomEvent.CONFIGURE_ROOM, onConfigureRoom, false, 0, true );
+				_room.addEventListener( RoomEvent.DECLINED, onDeclined, false, 0, true );
+				_room.addEventListener( RoomEvent.NICK_CONFLICT, onNickConflict, false, 0, true );
+				_room.addEventListener( RoomEvent.PRIVATE_MESSAGE, onPrivateMessage, false, 0, true );
+				_room.addEventListener( RoomEvent.ROOM_JOIN, onRoomJoin, false, 0, true );
+				_room.addEventListener( RoomEvent.ROOM_LEAVE, onRoomLeave, false, 0, true );
+				_room.addEventListener( RoomEvent.SUBJECT_CHANGE, onSubjectChange, false, 0, true );
+				_room.addEventListener( RoomEvent.USER_DEPARTURE, onUserDeparture, false, 0, true );
+				_room.addEventListener( RoomEvent.USER_JOIN, onUserJoin, false, 0, true );
+			}
+			
+			private function removeRoomListeners():void
+			{
+				_room.removeEventListener( RoomEvent.GROUP_MESSAGE, onGroupMessage );
+				_room.removeEventListener( RoomEvent.ADMIN_ERROR, onAdminError );
+				_room.removeEventListener( RoomEvent.AFFILIATIONS, onAffiliations );
+				_room.removeEventListener( RoomEvent.CONFIGURE_ROOM, onConfigureRoom );
+				_room.removeEventListener( RoomEvent.DECLINED, onDeclined );
+				_room.removeEventListener( RoomEvent.NICK_CONFLICT, onNickConflict );
+				_room.removeEventListener( RoomEvent.PRIVATE_MESSAGE, onPrivateMessage );
+				_room.removeEventListener( RoomEvent.ROOM_JOIN, onRoomJoin );
+				_room.removeEventListener( RoomEvent.ROOM_LEAVE, onRoomLeave );
+				_room.removeEventListener( RoomEvent.SUBJECT_CHANGE, onSubjectChange );
+				_room.removeEventListener( RoomEvent.USER_DEPARTURE, onUserDeparture );
+				_room.removeEventListener( RoomEvent.USER_JOIN, onUserJoin );
+			}
+			
+			private function setupDataProviders():void
+			{
+				inviteBuddyComboBox.dataProvider = _chatManager.roster;
+				inviteBuddyComboBox.labelField = "jid";
+				moderateBuddyComboBox.dataProvider = _room;
+				moderateBuddyComboBox.labelField = "jid";
+			}
+			
+			private function setConnection( connection:XMPPConnection ):void
+			{
+				if( _moderator )
+				{
+					_room.roomJID = new JID( DEFAULT_ROOM_LOCATION + "." + connection.server );
+				}
+				_room.roomName = "room_";
+				_room.connection = connection;
+			}
+			
+			private function sendMessage():void
+			{
+				var message:String = inputTextArea.text;
+				if( message.length > 0 )
+				{
+					_room.sendMessage( message );
+					callLater( clearTypeArea );
+				}
+			}
+			
+			private function appendLog( text:String ):void
+			{
+				logTextArea.htmlText += ( logTextArea.htmlText == "" ? "" : "\n" ) + text;
+				callLater( updateLogScrollPosition );
+			}
+			
+			private function updateLogScrollPosition():void
+			{
+				logTextArea.verticalScrollPosition = logTextArea.maxVerticalScrollPosition;
+			}
+			
+			private function clearTypeArea():void
+			{
+				inputTextArea.text = "";
+			}
+			
+			
+			private function onInit( event:FlexEvent ):void
+			{
+				if( _moderator )
+				{
+					_room = new Room();
+					setupModeratorRoom();
+				}
+				inputTextArea.addEventListener( FocusEvent.FOCUS_IN, onMessageFocusIn, false, 0, true );
+				inputTextArea.addEventListener( FocusEvent.FOCUS_OUT, onMessageFocusOut, false, 0, true );
+			}
+			
+			private function onCloseClick( event:CloseEvent ):void
+			{
+				inputTextArea.removeEventListener( KeyboardEvent.KEY_DOWN, onMessageKeyDown );
+				inputTextArea.removeEventListener( FocusEvent.FOCUS_IN, onMessageFocusIn );
+				inputTextArea.removeEventListener( FocusEvent.FOCUS_OUT, onMessageFocusOut );
+				removeRoomListeners();
+				_room.leave();
+				_room.destroy( "Room is closed." );
+				_room = null;
+				PopUpManager.removePopUp( this );
+			}
+			
+			private function onMessageKeyDown( e:KeyboardEvent ):void
+			{
+				if( e.keyCode == Keyboard.ENTER )
+				{
+					sendMessage();
+				}
+			}
+			
+			private function onMessageFocusIn( e:FocusEvent ):void
+			{
+				inputTextArea.addEventListener( KeyboardEvent.KEY_DOWN, onMessageKeyDown );
+			}
+			
+			private function onMessageFocusOut( e:FocusEvent ):void
+			{
+				inputTextArea.removeEventListener( KeyboardEvent.KEY_DOWN, onMessageKeyDown );
+			}
+			
+			private function onJoinClick( event:MouseEvent ):void
+			{
+				_room.join();
+				inviteBuddyComboBox.enabled = true;
+				moderateBuddyComboBox.enabled = true;
+			}
+			
+			private function onKickClick( event:MouseEvent ):void
+			{
+				var occupantNick:String = moderateBuddyComboBox.selectedLabel.substring( 0, moderateBuddyComboBox.selectedLabel.indexOf( "@" ) );
+				moderateBuddyComboBox.selectedIndex = -1;
+				_room.kickOccupant( occupantNick, "You have been removed from the chat room." );
+			}
+			
+			private function onBanClick( event:MouseEvent ):void
+			{
+				var jid:JID = new JID( moderateBuddyComboBox.selectedLabel );
+				moderateBuddyComboBox.selectedIndex = -1;
+				_room.ban( [ jid ] );
+			}
+			
+			private function onAllowClick( event:MouseEvent ):void
+			{
+				var jid:JID = new JID( moderateBuddyComboBox.selectedLabel );
+				moderateBuddyComboBox.selectedIndex = -1;
+				_room.allow( [ jid ] );
+			}
+			
+			private function onInviteClick( event:MouseEvent ):void
+			{
+				var jid:JID = new JID( inviteBuddyComboBox.selectedLabel );
+				inviteBuddyComboBox.selectedIndex = -1;
+				_room.invite( jid, "Please join my group chat!" );
+			}
+			
+			private function onSendClick( event:MouseEvent ):void
+			{
+				sendMessage();
+			}
+			
+			private function onGroupMessage( event:RoomEvent ):void
+			{
+				var msg:Message = event.data as Message;
+				
+				appendLog( "handle Group Incoming Message:" );
+				appendLog( "room: "+ msg.from );
+				var jid:JID = msg.from;
+				var nick:String = jid.resource;
+				var message:String = msg.body;
+				appendLog( "<font color='#0000ff'>" + nick + ": " + message + "</font>" );
+			}
+			
+			private function onAdminError( event:RoomEvent ):void
+			{
+				var xiffErrorEvent:XIFFErrorEvent = new XIFFErrorEvent();
+				xiffErrorEvent.errorCode = event.errorCode;
+				xiffErrorEvent.errorCondition = event.errorCondition;
+				xiffErrorEvent.errorMessage = event.errorMessage;
+				xiffErrorEvent.errorType = event.errorType;
+				dispatchEvent( xiffErrorEvent );
+			}
+			
+			private function onAffiliations( event:RoomEvent ):void
+			{
+				var mucItems:Array = event.data as Array;
+				for( var i:int=0; i<mucItems.length; i++ )
+				{
+					var muc:MUCItem = mucItems[ i ] as MUCItem;
+					var jid:JID = muc.jid;
+					var affiliation:String = muc.affiliation;
+					appendLog( "muc item jid: " + jid + ", affiliation: " + affiliation );
+				}
+			}
+			
+			private function onConfigureRoom( event:RoomEvent ):void
+			{
+				appendLog( "onConfigureRoom" );
+				var obj:Object = event.data as Object;
+				
+				for( var i:String in obj )
+				{
+					appendLog( i + " : " + obj[ i ] );
+				}
+			}
+			
+			private function onDeclined( event:RoomEvent ):void
+			{
+				var generalPopup:GeneralPopup = new GeneralPopup()
+				generalPopup.message = event.from + " declined to join room. Reason: " + event.reason;
+				PopUpManager.addPopUp( generalPopup, this );
+				PopUpManager.centerPopUp( generalPopup );
+				
+				appendLog( "onDeclined" );
+				appendLog( "from: " + event.from );
+				appendLog( "reason: " + event.reason );
+			}
+			
+			private function onNickConflict( event:RoomEvent ):void
+			{
+				var generalPopup:GeneralPopup = new GeneralPopup()
+				generalPopup.message = event.nickname + " is already taken, please use another nickname.";
+				PopUpManager.addPopUp( generalPopup, this );
+				PopUpManager.centerPopUp( generalPopup );
+				
+			}
+			
+			private function onPrivateMessage( event:RoomEvent ):void
+			{
+				var message:Message = event.data as Message;
+				var jid:JID = message.from;
+				var nick:String = jid.resource;
+				appendLog( "<font color='#00ff00'>Private message from " + nick + ": " + message.body + "</font>" );
+			}
+			
+			private function onRoomJoin( event:RoomEvent ):void
+			{
+				appendLog( "<font color='#ababab'>You joined the room.</font>" );
+				if( _moderator )
+				{
+					_room.changeSubject( "Subject Setting Success." );
+				}
+			}
+			
+			private function onRoomLeave( event:RoomEvent ):void
+			{
+			}
+			
+			private function onSubjectChange( event:RoomEvent ):void
+			{
+				subject.text = event.subject;
+			}
+			
+			private function onUserDeparture( event:RoomEvent ):void
+			{
+				appendLog( "<font color='#ababab'>" + event.nickname + " left the room.</font>" );
+			}
+			
+			private function onUserJoin( event:RoomEvent ):void
+			{
+				appendLog( "<font color='#ababab'>" + event.nickname + " joined the room.</font>" );
+			}
+		]]>
+	</mx:Script>
+	<mx:VBox width="100%" height="100%" paddingTop="5" paddingRight="5" paddingBottom="5" paddingLeft="5">
+		<mx:HBox width="100%">
+			<mx:Button id="joinButton" label="Create Room" click="onJoinClick( event )" />
+			<mx:Label text="Subject:" enabled="true" fontWeight="bold" />
+			<mx:Label id="subject" text="not yet set" enabled="true" fontWeight="bold" />
+		</mx:HBox>
+		<mx:Label text="Room Roster" enabled="true" fontWeight="bold" />
+		<mx:HBox width="100%" height="100%">
+			<mx:VBox width="50%" height="100%">
+				<mx:DataGrid id="chatRosterGrid" width="100%" height="60%" />
+				<mx:HBox width="100%" height="40%">
+					<mx:TitleWindow title="Invite Buddy" width="50%" height="100%">
+						<mx:VBox width="100%" height="100%" verticalGap="4" paddingTop="5" paddingRight="5" paddingBottom="5" paddingLeft="5">
+							<mx:Label text="Select Buddy" enabled="true" fontWeight="bold" />
+							<mx:ComboBox id="inviteBuddyComboBox" width="100%" enabled="false" />
+							<mx:Button id="inviteBuddyButton" label="Invite" enabled="true" click="onInviteClick( event )" />
+						</mx:VBox>
+					</mx:TitleWindow>
+					<mx:TitleWindow title="Moderator Actions" width="50%" height="100%">
+						<mx:VBox width="100%" height="100%" verticalGap="4" paddingTop="5" paddingRight="5" paddingBottom="5" paddingLeft="5">
+							<mx:Label text="Select Buddy" enabled="true" fontWeight="bold" />
+							<mx:ComboBox id="moderateBuddyComboBox" width="100%" enabled="false" />
+							<mx:Button id="kickBuddyButton" label="Kick User" enabled="true" click="onKickClick( event )" />
+							<mx:Button id="banBuddyButton" label="Ban User" enabled="true" click="onBanClick( event )" />
+							<mx:Button id="allowBuddyButton" label="Allow User (Unban)" enabled="true" click="onAllowClick( event )" />
+						</mx:VBox>
+					</mx:TitleWindow>
+				</mx:HBox>
+			</mx:VBox>
+			<mx:VBox width="50%" height="100%">
+				<mx:TextArea id="logTextArea" width="100%" height="100%" />
+				<mx:HBox width="100%">
+					<mx:TextArea id="inputTextArea" width="100%" height="21" wordWrap="false" backgroundColor="#EFEFEF" borderStyle="inset" editable="true" />
+					<mx:Button id="sendButton" label="Send" click="onSendClick( event )" />
+				</mx:HBox>
+			</mx:VBox>
+		</mx:HBox>
+	</mx:VBox>
+</mx:TitleWindow>

@@ -1,0 +1,125 @@
+/* CSS file */
+WindowedApplication
+{
+    font-size:12;
+    background-color:#ffffff;
+    background-gradient-colors:#cde6ef,#cde6ef;
+    titleBarColors:#ecfeff,#cde6ef;
+    title-text-style-name:"titleText";
+    
+}
+MenuBar   
+{   
+    cornerRadius: 0;   
+    fillAlphas: 0,0;   
+    border-alpha:0;   
+}   
+.menuBackgroundColor{   
+}  
+
+Tree
+{
+	default-leaf-icon:ClassReference(null);
+	folder-closed-icon:ClassReference(null);
+	folder-open-icon:ClassReference(null);
+}
+
+.Window
+{
+    font-size:12;
+    background-color:#ffffff;
+    background-gradient-colors:#cde6ef,#cde6ef;
+    titleBarColors:#ecfeff,#cde6ef;
+    title-text-style-name:"titleText"
+}
+
+TextArea
+{
+    border-style:solid;
+    corner-radius:4;
+    borderColor: #6dacd5;
+}
+
+TextInput
+{
+	border-style:solid;
+    corner-radius:4;
+    borderColor: #6dacd5;
+}
+
+.titleText
+{
+	color:#666666;
+	font-size:12;
+	font-weight:bold;
+}
+Button {
+   cornerRadius: 4;
+   highlightAlphas: 0.10, 0.29;
+   fillAlphas: 0.08, 1, 0.36, 0.65;
+   fillColors: #90ccdb, #90ccdb, #ffffff, #3f97d0;
+}
+
+TabNavigator
+{
+	horizontalAlign: left;
+}
+LinkButton
+{
+}
+
+Panel
+{
+    border-skin:Embed(source="../images/Back.png",scaleGridTop="61",scaleGridLeft="12",scaleGridRight="103",scaleGridBottom="96");
+}
+Accordion
+{
+	font-size:12;
+	headerStyleName: accordionHeader;
+	   highlightAlphas: 0.10, 0.29;
+   fillAlphas: 0.08, 1, 0.36, 0.65;
+   fillColors: #90ccdb, #90ccdb, #ffffff, #3f97d0;
+}
+.accordionHeader
+{
+	fontSize: 12;
+	   highlightAlphas: 0.10, 0.29;
+   fillAlphas: 0.08, 1, 0.36, 0.65;
+   fillColors: #90ccdb, #90ccdb, #ffffff, #3f97d0;
+}
+.imageBox
+{
+	border-style:solid;
+	border-thickness:0;
+	corner-radius:0;
+	background-color:#ffffff;
+}
+/* 分页导航按钮 */
+.previousPageBtn
+{
+	up-skin:Embed(source="../images/previousPage.png");
+	over-skin:Embed(source="../images/previousPage.png");
+	down-skin:Embed(source="../images/previousPage.png");
+	disabled-skin:Embed(source="../images/previousPage.png");
+}
+.nextPageBtn
+{
+	up-skin:Embed(source="../images/nextPage.png");
+	over-skin:Embed(source="../images/nextPage.png");
+	down-skin:Embed(source="../images/nextPage.png");
+	disabled-skin:Embed(source="../images/nextPage.png");
+}
+.firstPageBtn
+{
+	up-skin:Embed(source="../images/firstPage.png");
+	over-skin:Embed(source="../images/firstPage.png");
+	down-skin:Embed(source="../images/firstPage.png");
+	disabled-skin:Embed(source="../images/firstPage.png");
+}
+.lastPageBtn
+{
+	up-skin:Embed(source="../images/lastPage.png");
+	over-skin:Embed(source="../images/lastPage.png");
+	down-skin:Embed(source="../images/lastPage.png");
+	disabled-skin:Embed(source="../images/lastPage.png");
+}
