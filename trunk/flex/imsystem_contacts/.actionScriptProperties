@@ -11,6 +11,8 @@
 <applications>
 <application path="imsystem_contacts.mxml"/>
 </applications>
-<modules/>
+<modules>
+<module application="src/imsystem_contacts.mxml" destPath="contacts.swf" optimize="false" sourcePath="src/contacts.mxml"/>
+</modules>
 <buildCSSFiles/>
 </actionScriptProperties>
