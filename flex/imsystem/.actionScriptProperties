@@ -6,7 +6,6 @@
 <libraryPathEntry kind="4" path=""/>
 <libraryPathEntry kind="1" linkType="1" path="libs"/>
 <libraryPathEntry kind="3" linkType="1" path="/xiff/bin/xiff.swc" useDefaultLinkType="false"/>
-<libraryPathEntry kind="3" linkType="1" path="/imsystem_contacts/bin/imsystem_contacts.swc" useDefaultLinkType="false"/>
 </libraryPath>
 <sourceAttachmentPath>
 <sourceAttachmentPathEntry kind="3" linkType="1" path="D:/workspace/flex/imsystem/libs/PureMVC_AS3_MultiCore_1_0_5.swc" sourcepath="${DOCUMENTS}/puremvc_multicore_105/src" useDefaultLinkType="false"/>
