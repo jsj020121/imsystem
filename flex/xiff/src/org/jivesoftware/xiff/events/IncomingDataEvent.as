@@ -32,10 +32,15 @@ package org.jivesoftware.xiff.events
 		public static var INCOMING_DATA:String = "incomingData";
 		private var _data:XMLDocument;
 		
-		public function IncomingDataEvent()
+		/* public function IncomingDataEvent()
 		{
 			super(IncomingDataEvent.INCOMING_DATA, false, false);
+		} */
+		public function IncomingDataEvent(type:String='incomingData', bubbles:Boolean=false, cancelable:Boolean=false)
+		{
+			super(type, bubbles, cancelable);
 		}
+		
 		public function get data():XMLDocument
 		{
 			return _data;
@@ -43,6 +48,11 @@ package org.jivesoftware.xiff.events
 		public function set data(x:XMLDocument):void
 		{
 			_data = x;
+		}
+		override public function clone():Event{
+			var clonedEvt:IncomingDataEvent = new IncomingDataEvent(type,bubbles,cancelable);
+			clonedEvt.data = data;
+			return clonedEvt;
 		}
 	}
 }
