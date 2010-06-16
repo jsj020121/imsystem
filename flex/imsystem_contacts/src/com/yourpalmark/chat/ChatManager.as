@@ -5,6 +5,8 @@ package com.yourpalmark.chat
 	import flash.events.EventDispatcher;
 	import flash.system.Security;
 	
+	import mx.utils.ObjectUtil;
+	
 	import org.jivesoftware.xiff.conference.InviteListener;
 	import org.jivesoftware.xiff.core.JID;
 	import org.jivesoftware.xiff.core.XMPPSocketConnection;
@@ -25,6 +27,8 @@ package com.yourpalmark.chat
 	import org.jivesoftware.xiff.events.RosterEvent;
 	import org.jivesoftware.xiff.events.XIFFErrorEvent;
 	import org.jivesoftware.xiff.im.Roster;
+	
+	[Event(name="outgoingData", type="org.jivesoftware.xiff.events.OutgoingDataEvent")]
 	
 	public class ChatManager extends EventDispatcher
 	{
