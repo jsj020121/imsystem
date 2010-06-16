@@ -32,10 +32,16 @@ package org.jivesoftware.xiff.events
 		public static var OUTGOING_DATA:String = "outgoingData";
 		private var _data:*;
 		
-		public function OutgoingDataEvent()
+		/* public function OutgoingDataEvent()
 		{
 			super(OutgoingDataEvent.OUTGOING_DATA, false, false);
+		} */
+		
+		public function OutgoingDataEvent(type:String='outgoingData', bubbles:Boolean=false, cancelable:Boolean=false)
+		{
+			super(type, bubbles, cancelable);
 		}
+		
 		public function get data():*
 		{
 			return _data;
@@ -43,6 +49,11 @@ package org.jivesoftware.xiff.events
 		public function set data(d:*):void
 		{
 			_data = d;
+		}
+		override public function clone():Event{
+			var clonedEvt:OutgoingDataEvent = new OutgoingDataEvent(type,bubbles,cancelable);
+			clonedEvt.data = data;
+			return clonedEvt;
 		}
 	}
 }
