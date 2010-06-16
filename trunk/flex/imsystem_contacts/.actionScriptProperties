@@ -10,8 +10,8 @@
 <sourceAttachmentPath/>
 </compiler>
 <applications>
-<application path="imsystem_contacts.mxml"/>
 <application path="imsystem_demo.mxml"/>
+<application path="imsystem_contacts.mxml"/>
 </applications>
 <modules>
 <module application="src/imsystem_contacts.mxml" destPath="contacts.swf" optimize="false" sourcePath="src/contacts.mxml"/>

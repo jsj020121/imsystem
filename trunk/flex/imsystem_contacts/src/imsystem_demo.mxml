@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
-	showStatusBar="false"  width="1024" height="600" title="  XIFF Sample" cornerRadius="4" >
-	<mx:ModuleLoader url="demo.swf" width="100%" height="100%"/>
+	showStatusBar="false"  width="1024" height="600" title="  XIFF Sample" cornerRadius="4" 
+	xmlns:view="com.yourpalmark.chat.view.*">
+	<mx:Canvas width="100%" height="100%">
+		<mx:ModuleLoader url="demo.swf" width="100%" height="100%"/>
+	</mx:Canvas>
 </mx:WindowedApplication>
