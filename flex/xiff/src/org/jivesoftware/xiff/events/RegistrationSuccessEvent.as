@@ -34,6 +34,9 @@ package org.jivesoftware.xiff.events
 		{
 			super(RegistrationSuccessEvent.REGISTRATION_SUCCESS, false, false);
 		}
-		
+		override public function clone():Event{
+			var clonedEvt:RegistrationSuccessEvent = new RegistrationSuccessEvent();
+			return clonedEvt;
+		}
 	}
 }

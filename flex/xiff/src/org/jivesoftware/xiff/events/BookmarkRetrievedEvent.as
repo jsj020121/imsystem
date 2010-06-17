@@ -9,5 +9,10 @@ package org.jivesoftware.xiff.events
 		public function BookmarkRetrievedEvent():void {
 			super(BOOKMARK_RETRIEVED);
 		}
+		
+		override public function clone():Event{
+			var clonedEvt:BookmarkRetrievedEvent = new BookmarkRetrievedEvent();
+			return clonedEvt;
+		}
 	}
 }

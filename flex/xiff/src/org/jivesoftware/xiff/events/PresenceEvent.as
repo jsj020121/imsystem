@@ -44,5 +44,10 @@ package org.jivesoftware.xiff.events
 		{
 			_data = p;
 		}
+		override public function clone():Event{
+			var clonedEvt:PresenceEvent = new PresenceEvent();
+			clonedEvt.data = data;
+			return clonedEvt;
+		}
 	}
 }

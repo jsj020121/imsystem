@@ -52,5 +52,11 @@ package org.jivesoftware.xiff.events
 		{
 			_data = r;
 		}
+		override public function clone():Event{
+			var clonedEvt:RegistrationFieldsEvent = new RegistrationFieldsEvent();
+			clonedEvt.fields = fields;
+			clonedEvt.data = data;
+			return clonedEvt;
+		}
 	}
 }

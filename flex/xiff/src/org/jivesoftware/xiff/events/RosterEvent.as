@@ -63,5 +63,11 @@ package org.jivesoftware.xiff.events
 		{
 			_data = d;
 		}
+		override public function clone():Event{
+			var clonedEvt:RosterEvent = new RosterEvent(type, bubbles, cancelable);
+			clonedEvt.jid = jid;
+			clonedEvt.data = data;
+			return clonedEvt;
+		}
 	}
 }

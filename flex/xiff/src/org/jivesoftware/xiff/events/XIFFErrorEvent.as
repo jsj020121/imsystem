@@ -69,5 +69,13 @@ package org.jivesoftware.xiff.events
 		{
 			return _errorCode;
 		}
+		 override public function clone():Event{
+			var clonedEvt:XIFFErrorEvent = new XIFFErrorEvent();
+			clonedEvt.errorCondition = errorCondition;
+			clonedEvt.errorMessage = errorMessage;
+			clonedEvt.errorType = errorType;
+			clonedEvt.errorCode = errorCode;
+			return clonedEvt;
+		}
 	}
 }

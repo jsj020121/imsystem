@@ -33,6 +33,9 @@ package org.jivesoftware.xiff.events
 		{
 			super(DisconnectionEvent.DISCONNECT, false, false);
 		}
-		
+		override public function clone():Event{
+			var clonedEvt:DisconnectionEvent = new DisconnectionEvent();
+			return clonedEvt;
+		}
 	}
 }

@@ -21,5 +21,12 @@ package org.jivesoftware.xiff.events
 			else
 				urlBookmark = bookmark as UrlBookmark;
 		}
+		
+		override public function clone():Event{
+			var clonedEvt:BookmarkChangedEvent;
+			var bookmark:* = groupchatBookmark == null ? urlBookmark : groupchatBookmark;
+			clonedEvt = new BookmarkChangedEvent(type,bookmark);
+			return clonedEvt;
+		}
 	}
 }

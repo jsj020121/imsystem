@@ -33,6 +33,9 @@ package org.jivesoftware.xiff.events
 		{
 			super(LoginEvent.LOGIN, false, false);
 		}
-		
+		override public function clone():Event{
+			var clonedEvt:LoginEvent = new LoginEvent();
+			return clonedEvt;
+		}
 	}
 }
