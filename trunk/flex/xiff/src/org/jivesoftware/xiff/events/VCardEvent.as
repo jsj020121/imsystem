@@ -16,14 +16,14 @@ public class VCardEvent extends Event {
         _vcard = vcard;
     }
 
-    public override function clone():Event {
-      return new VCardEvent( type, _vcard, bubbles, cancelable );
-    }
-    
     public function get vcard():VCard {
     	return _vcard;
     }
     
+    override public function clone():Event{
+		var clonedEvt:VCardEvent = new VCardEvent(type, vcard, bubbles, cancelable);
+		return clonedEvt;
+	}
     
   }
 }

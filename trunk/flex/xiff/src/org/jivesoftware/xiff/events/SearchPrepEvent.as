@@ -21,6 +21,11 @@ package org.jivesoftware.xiff.events
 		{
 			_server = s;
 		}
-
+		
+		override public function clone():Event{
+			var clonedEvt:SearchPrepEvent = new SearchPrepEvent(type, bubbles, cancelable);
+			clonedEvt.server = server;
+			return clonedEvt;
+		}
 	}
 }

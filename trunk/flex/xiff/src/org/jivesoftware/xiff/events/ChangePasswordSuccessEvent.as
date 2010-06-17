@@ -32,5 +32,10 @@ package org.jivesoftware.xiff.events
 		{
 			super(ChangePasswordSuccessEvent.PASSWORD_SUCCESS, false, false);
 		}
+		
+		override public function clone():Event{
+			var clonedEvt:ChangePasswordSuccessEvent = new ChangePasswordSuccessEvent();
+			return clonedEvt;
+		}
 	}
 }

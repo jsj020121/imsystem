@@ -72,5 +72,13 @@ package org.jivesoftware.xiff.events
 		{
 			_data = d;
 		}
+		override public function clone():Event{
+			var clonedEvt:InviteEvent = new InviteEvent();
+			clonedEvt.from = from;
+			clonedEvt.reason = reason;
+			clonedEvt.room = room;
+			clonedEvt.data = data;
+			return clonedEvt;
+		}
 	}
 }

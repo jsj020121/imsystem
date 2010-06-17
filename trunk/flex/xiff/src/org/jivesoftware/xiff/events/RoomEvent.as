@@ -144,5 +144,19 @@ package org.jivesoftware.xiff.events
 		{
 			return _reason;
 		}
+		override public function clone():Event{
+			var clonedEvt:RoomEvent = new RoomEvent(type, bubbles, cancelable);
+			clonedEvt.subject = subject;
+			clonedEvt.message = message;
+			clonedEvt.data = data;
+			clonedEvt.errorCondition = errorCondition;
+			clonedEvt.errorMessage = errorMessage;
+			clonedEvt.errorType = errorType;
+			clonedEvt.errorCode = errorCode;
+			clonedEvt.nickname = nickname;
+			clonedEvt.from = from;
+			clonedEvt.reason = reason;
+			return clonedEvt;
+		}
 	}
 }

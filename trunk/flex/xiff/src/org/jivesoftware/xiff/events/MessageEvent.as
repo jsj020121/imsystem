@@ -43,5 +43,10 @@ package org.jivesoftware.xiff.events
 		{
 			_data = m;
 		}
+		override public function clone():Event{
+			var clonedEvt:MessageEvent = new MessageEvent();
+			clonedEvt.data = data;
+			return clonedEvt;
+		}
 	}
 }

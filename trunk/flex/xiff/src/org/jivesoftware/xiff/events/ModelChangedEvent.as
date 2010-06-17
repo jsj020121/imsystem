@@ -68,6 +68,14 @@ package org.jivesoftware.xiff.events
 		{
 			return _fieldName;
 		}
+		override public function clone():Event{
+			var clonedEvt:ModelChangedEvent = new ModelChangedEvent();
+			clonedEvt.firstItem = firstItem;
+			clonedEvt.lastItem = lastItem;
+			clonedEvt.removedIDs = removedIDs;
+			clonedEvt.fieldName = fieldName;
+			return clonedEvt;
+		}
 	}
 }
 					

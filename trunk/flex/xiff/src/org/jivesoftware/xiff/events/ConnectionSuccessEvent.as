@@ -34,6 +34,9 @@ package org.jivesoftware.xiff.events
 		{
 			super(ConnectionSuccessEvent.CONNECT_SUCCESS, false, false);
 		}
-		
+		override public function clone():Event{
+			var clonedEvt:ConnectionSuccessEvent = new ConnectionSuccessEvent();
+			return clonedEvt;
+		}
 	}
 }
