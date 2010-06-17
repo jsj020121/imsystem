@@ -55,7 +55,7 @@ package com.yourpalmark.chat
 		public static function isValidJID( jid:JID ):Boolean
 		{
 			var value:Boolean = false;
-			var pattern:RegExp = /(\w|[_.\-])+@(localhost$|((\w|-)+\.)+\w{2,4}$){1}/;
+			var pattern:RegExp = /(\w|[_.\-])+@(pc-201006050056$|((\w|-)+\.)+\w{2,4}$){1}/;
 			var result:Object = pattern.exec( jid.toString() );
 			if( result )
 			{
