@@ -1,6 +1,6 @@
-package com.yourpalmark.chat
+package com.demo.chat
 {
-	import com.yourpalmark.chat.data.LoginCredentials;
+	import com.demo.chat.data.LoginCredentials;
 	
 	import flash.events.EventDispatcher;
 	import flash.system.Security;

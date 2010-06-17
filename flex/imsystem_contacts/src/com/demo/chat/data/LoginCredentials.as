@@ -1,4 +1,4 @@
-package com.yourpalmark.chat.data
+package com.demo.chat.data
 {
 	public class LoginCredentials
 	{

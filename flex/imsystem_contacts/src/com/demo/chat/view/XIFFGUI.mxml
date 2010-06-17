@@ -6,8 +6,8 @@
 	<mx:Script>
 		<![CDATA[
 			import mx.events.ResizeEvent;
-			import com.yourpalmark.chat.ChatManager;
-			import com.yourpalmark.chat.data.LoginCredentials;
+			import com.demo.chat.ChatManager;
+			import com.demo.chat.data.LoginCredentials;
 			import com.pixelbreaker.ui.osx.MacMouseWheel;
 			
 			import mx.collections.ArrayCollection;
