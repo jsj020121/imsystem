@@ -5,8 +5,6 @@ package com.demo.chat
 	import flash.events.EventDispatcher;
 	import flash.system.Security;
 	
-	import mx.utils.ObjectUtil;
-	
 	import org.jivesoftware.xiff.conference.InviteListener;
 	import org.jivesoftware.xiff.core.JID;
 	import org.jivesoftware.xiff.core.XMPPSocketConnection;
@@ -33,7 +31,7 @@ package com.demo.chat
 	public class ChatManager extends EventDispatcher
 	{
 		[Bindable]
-		public static var serverLocation:String = "localhost";
+		public static var serverLocation:String = "im.com";
 		
 		private var streamType:String = "standard";
 		private var registerUser:Boolean;
@@ -55,7 +53,7 @@ package com.demo.chat
 		public static function isValidJID( jid:JID ):Boolean
 		{
 			var value:Boolean = false;
-			var pattern:RegExp = /(\w|[_.\-])+@(pc-201006050056$|((\w|-)+\.)+\w{2,4}$){1}/;
+			var pattern:RegExp = new RegExp("(\w|[_.\-])+@("+serverLocation+"$|((\w|-)+\.)+\w{2,4}$){1}");
 			var result:Object = pattern.exec( jid.toString() );
 			if( result )
 			{
