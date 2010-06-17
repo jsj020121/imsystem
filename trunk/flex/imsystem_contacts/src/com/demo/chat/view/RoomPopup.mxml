@@ -5,7 +5,7 @@
 	<mx:Script>
 		<![CDATA[
 			import mx.core.Application;
-			import com.yourpalmark.chat.ChatManager;
+			import com.demo.chat.ChatManager;
 			
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
