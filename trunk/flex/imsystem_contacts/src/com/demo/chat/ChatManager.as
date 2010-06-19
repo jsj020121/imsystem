@@ -52,9 +52,11 @@ package com.demo.chat
 		
 		public static function isValidJID( jid:JID ):Boolean
 		{
-			var value:Boolean = false;
-			var pattern:RegExp = new RegExp("(\w|[_.\-])+@("+serverLocation+"$|((\w|-)+\.)+\w{2,4}$){1}");
-			var result:Object = pattern.exec( jid.toString() );
+			var value:Boolean = true;
+			//var pattern:RegExp = new RegExp("(\w|[_.\-])+@("+serverLocation+"$|((\w|-)+\.)+\w{2,4}$){1}");
+			var pattern:RegExp = /\w|[_.\-])+@(im.com$|((\w|-)+\.)+\w{2,4}$){1}/;
+			var jidstr:String = jid.toString();
+			var result:Object = pattern.exec( jidstr );
 			if( result )
 			{
 				value = true;
