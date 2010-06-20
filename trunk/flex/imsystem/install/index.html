@@ -36,6 +36,9 @@ var requiredRevision = 115;		// This is Flash Player 9 Update 3
 <script src="AC_RunActiveContent.js" type="text/javascript"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
+//
+var d = new Date();
+var timestamp = d.getTime()+"";
 // Version check based upon the values entered above in "Globals"
 var hasReqestedVersion = DetectFlashVer(requiredMajorVersion, requiredMinorVersion, requiredRevision);
 
@@ -56,7 +59,7 @@ if (hasReqestedVersion) {
 		'name','badge',
 		'allowscriptaccess','all',
 		'pluginspage','http://www.macromedia.com/go/getflashplayer',
-		'flashvars','appname=imsystem&appurl=http://im.com/install/imsystem_demo.air&airversion=1.0&imageurl=test.jpg',
+		'flashvars','appname=imsystem&appurl=http://im.com/install/imsystem_demo.air&airversion=1.0&imageurl=test.jpg&timestamp'+timestamp,
 		'movie','badge' ); //end AC code
 
 } else {  // Flash Player is too old or we can't detect the plugin
